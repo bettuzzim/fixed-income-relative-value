@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Schiena Piatta — Guida posturale interattiva</title>
+<style>
+  :root{
+    --bg:#0e1613;
+    --bg-alt:#141f1b;
+    --card:#182722;
+    --card-hover:#1d2f29;
+    --border:#283b34;
+    --text:#e7f2ee;
+    --text-dim:#9fb8b0;
+    --text-faint:#6d8880;
+    --accent:#34d399;
+    --accent-2:#2dd4bf;
+    --accent-strong:#6ee7b7;
+    --accent-soft:rgba(52,211,153,.14);
+    --danger:#f87171;
+    --danger-soft:rgba(248,113,113,.12);
+    --warn:#fbbf24;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 8px 24px rgba(0,0,0,.35);
+    --maxw:760px;
+  }
+  :root[data-theme="light"]{
+    --bg:#f3f8f6;
+    --bg-alt:#e8f1ee;
+    --card:#ffffff;
+    --card-hover:#eef8f4;
+    --border:#d7e6e0;
+    --text:#132420;
+    --text-dim:#3f5a52;
+    --text-faint:#6b8078;
+    --accent:#0f9d70;
+    --accent-2:#0d9488;
+    --accent-strong:#0b7a56;
+    --accent-soft:rgba(15,157,112,.10);
+    --danger:#dc2626;
+    --danger-soft:rgba(220,38,38,.08);
+    --warn:#b45309;
+    --shadow:0 8px 24px rgba(20,60,50,.10);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    padding-bottom:60px;
+  }
+  a{color:var(--accent-strong);}
+  h1,h2,h3{line-height:1.25;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 16px;}
+
+  /* HEADER */
+  header.top{
+    background:
+      radial-gradient(1200px 400px at 50% -120px, var(--accent-soft), transparent 70%),
+      linear-gradient(180deg, var(--bg-alt), var(--bg));
+    border-bottom:1px solid var(--border);
+    padding:22px 0 26px;
+  }
+  .top-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;}
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-badge{
+    width:38px;height:38px;border-radius:12px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    display:flex;align-items:center;justify-content:center;
+    font-size:19px;flex:none;
+    box-shadow:0 4px 14px rgba(52,211,153,.35);
+  }
+  .brand h1{font-size:1.05rem;margin:0;font-weight:700;letter-spacing:.2px;}
+  .brand span{display:block;font-size:.72rem;color:var(--text-faint);font-weight:500;}
+  #themeToggle{
+    background:var(--card);
+    border:1px solid var(--border);
+    color:var(--text);
+    width:40px;height:40px;border-radius:50%;
+    font-size:1.05rem;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:transform .15s ease, background .2s ease;
+  }
+  #themeToggle:active{transform:scale(.9);}
+
+  .intro h2{font-size:1.35rem;margin:6px 0 8px;}
+  .intro p{color:var(--text-dim);font-size:.94rem;margin:0 0 16px;}
+
+  .factor-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+  }
+  .factor{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:12px 12px 13px;
+  }
+  .factor .ico{font-size:1.2rem;display:block;margin-bottom:4px;}
+  .factor b{font-size:.82rem;display:block;margin-bottom:2px;}
+  .factor p{margin:0;font-size:.76rem;color:var(--text-dim);}
+
+  /* NAV */
+  nav.tabs{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--border);
+    overflow-x:auto;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs .wrap{display:flex;gap:8px;padding:10px 16px;}
+  nav.tabs a{
+    flex:none;
+    text-decoration:none;
+    font-size:.8rem;
+    font-weight:600;
+    color:var(--text-dim);
+    background:var(--card);
+    border:1px solid var(--border);
+    padding:8px 14px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  nav.tabs a:hover{color:var(--text);border-color:var(--accent);}
+
+  main{max-width:var(--maxw);margin:0 auto;padding:20px 16px 0;}
+
+  section.group{margin-bottom:34px;scroll-margin-top:64px;}
+  .group-head{display:flex;align-items:center;gap:10px;margin-bottom:4px;}
+  .group-head .dot{
+    width:10px;height:10px;border-radius:50%;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    flex:none;
+  }
+  .group-head h2{margin:0;font-size:1.15rem;}
+  .group-desc{color:var(--text-dim);font-size:.85rem;margin:4px 0 16px;}
+
+  /* EXERCISE CARD */
+  details.exercise{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    margin-bottom:12px;
+    overflow:hidden;
+    transition:border-color .2s ease;
+  }
+  details.exercise[open]{border-color:var(--accent);}
+  details.exercise summary{
+    list-style:none;
+    cursor:pointer;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  details.exercise summary::-webkit-details-marker{display:none;}
+  .summary-txt{flex:1;min-width:0;}
+  .summary-txt h3{margin:0 0 3px;font-size:.98rem;}
+  .summary-meta{display:flex;flex-wrap:wrap;gap:6px;}
+  .pill{
+    font-size:.68rem;font-weight:600;
+    padding:2px 8px;border-radius:999px;
+    background:var(--accent-soft);
+    color:var(--accent-strong);
+    white-space:nowrap;
+  }
+  .pill.alt{background:var(--bg-alt);color:var(--text-dim);}
+  .chevron{
+    flex:none;width:22px;height:22px;
+    display:flex;align-items:center;justify-content:center;
+    color:var(--text-faint);
+    transition:transform .25s ease;
+  }
+  details.exercise[open] .chevron{transform:rotate(180deg);color:var(--accent);}
+
+  .exercise-body{padding:0 16px 18px;}
+  .illustration{
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    display:flex;justify-content:center;
+    padding:10px;
+    margin-bottom:14px;
+  }
+  .illustration svg{width:100%;max-width:230px;height:auto;color:var(--accent);}
+  .illustration svg .accent2{color:var(--accent-2);}
+  .illustration svg .curve{color:var(--warn);}
+  .illustration svg .muted{color:var(--text-faint);}
+
+  .exercise-body h4{
+    font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;
+    color:var(--text-faint);margin:16px 0 8px;
+  }
+  .exercise-body h4:first-of-type{margin-top:2px;}
+  .muscles{font-size:.85rem;color:var(--text-dim);margin:0;}
+  ol.steps{margin:0;padding-left:20px;font-size:.88rem;color:var(--text);}
+  ol.steps li{margin-bottom:6px;}
+  ul.mistakes{margin:0;padding:0;list-style:none;}
+  ul.mistakes li{
+    font-size:.85rem;color:var(--text-dim);
+    padding:8px 10px;margin-bottom:6px;
+    background:var(--danger-soft);
+    border-left:3px solid var(--danger);
+    border-radius:6px;
+  }
+  ul.mistakes li b{color:var(--danger);font-weight:600;}
+
+  /* TIMER */
+  .timer{
+    margin-top:16px;
+    background:var(--bg-alt);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .timer .side-label{font-size:.78rem;font-weight:600;color:var(--accent-strong);min-height:1em;}
+  .timer .ring-wrap{position:relative;width:120px;height:120px;}
+  .timer svg.ring{width:120px;height:120px;transform:rotate(-90deg);}
+  .timer .ring-bg{fill:none;stroke:var(--border);stroke-width:8;}
+  .timer .ring-fg{fill:none;stroke:url(#tgrad);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .25s linear;}
+  .timer .time-txt{
+    position:absolute;inset:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.5rem;font-weight:700;font-variant-numeric:tabular-nums;
+  }
+  .timer .durations{display:flex;gap:6px;}
+  .timer .durations button{
+    font-size:.72rem;font-weight:600;
+    padding:4px 10px;border-radius:999px;
+    border:1px solid var(--border);
+    background:var(--card);color:var(--text-dim);cursor:pointer;
+  }
+  .timer .durations button.active{background:var(--accent-soft);color:var(--accent-strong);border-color:var(--accent);}
+  .timer .controls{display:flex;gap:8px;margin-top:2px;}
+  .timer button.main-btn{
+    border:none;cursor:pointer;font-weight:700;font-size:.85rem;
+    padding:9px 20px;border-radius:999px;
+    background:linear-gradient(135deg,var(--accent),var(--accent-2));
+    color:#04211a;
+  }
+  .timer button.reset-btn{
+    border:1px solid var(--border);cursor:pointer;font-weight:600;font-size:.85rem;
+    padding:9px 16px;border-radius:999px;
+    background:transparent;color:var(--text-dim);
+  }
+  .timer .done-flash{font-size:.78rem;color:var(--accent-strong);font-weight:700;min-height:1em;}
+
+  /* CHECKLIST */
+  .checklist-card{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:var(--radius);padding:16px;margin-bottom:16px;
+  }
+  .checklist-card h3{margin:0 0 2px;font-size:1rem;}
+  .progress-line{font-size:.78rem;color:var(--text-dim);margin:0 0 12px;}
+  .progress-bar{height:8px;border-radius:999px;background:var(--bg-alt);overflow:hidden;margin-bottom:14px;border:1px solid var(--border);}
+  .progress-bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-2));width:0%;transition:width .3s ease;}
+  .check-item{
+    display:flex;align-items:flex-start;gap:10px;
+    padding:9px 4px;border-bottom:1px solid var(--border);
+    font-size:.88rem;cursor:pointer;
+  }
+  .check-item:last-child{border-bottom:none;}
+  .check-item input{
+    appearance:none;-webkit-appearance:none;
+    width:19px;height:19px;flex:none;margin-top:1px;
+    border:2px solid var(--text-faint);border-radius:6px;
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;background:transparent;
+  }
+  .check-item input:checked{background:var(--accent);border-color:var(--accent);}
+  .check-item input:checked::after{
+    content:"✓";color:#04211a;font-size:13px;font-weight:900;
+    display:flex;align-items:center;justify-content:center;width:100%;height:100%;
+  }
+  .check-item span.lbl-title{display:block;}
+  .check-item span.lbl-sub{display:block;font-size:.74rem;color:var(--text-faint);margin-top:1px;}
+  .check-item.checked span.lbl-title{color:var(--text-faint);text-decoration:line-through;}
+  .checklist-reset{
+    margin-top:12px;background:transparent;border:1px solid var(--border);
+    color:var(--text-dim);font-size:.76rem;padding:7px 14px;border-radius:999px;cursor:pointer;
+  }
+
+  footer{max-width:var(--maxw);margin:30px auto 0;padding:0 16px;color:var(--text-faint);font-size:.75rem;text-align:center;}
+
+  @media (min-width:520px){
+    .factor-grid{grid-template-columns:repeat(4,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <div class="top-bar">
+      <div class="brand">
+        <div class="brand-badge">🌿</div>
+        <div>
+          <h1>Schiena Piatta</h1>
+          <span>Guida posturale interattiva</span>
+        </div>
+      </div>
+      <button id="themeToggle" title="Cambia tema" aria-label="Cambia tema">🌙</button>
+    </div>
+
+    <div class="intro">
+      <h2>Cos'è la "schiena piatta"?</h2>
+      <p>
+        La <strong>flat back</strong> è una postura in cui la normale curva lordotica lombare
+        si riduce o scompare. Il bacino tende a ruotare in <strong>retroversione</strong>,
+        la parte bassa della schiena si "appiattisce" e il carico sulla colonna si distribuisce
+        in modo meno efficiente. Le cause più comuni si combinano tra loro:
+      </p>
+      <div class="factor-grid">
+        <div class="factor">
+          <span class="ico">📉</span>
+          <b>Poca lordosi</b>
+          <p>La curva lombare naturale è ridotta o assente.</p>
+        </div>
+        <div class="factor">
+          <span class="ico">🦵</span>
+          <b>Ischiocrurali rigidi</b>
+          <p>Tirano il bacino in retroversione da dietro.</p>
+        </div>
+        <div class="factor">
+          <span class="ico">🪢</span>
+          <b>Flessori dell'anca deboli</b>
+          <p>Non riescono a "aprire" il bacino in avanti.</p>
+        </div>
+        <div class="factor">
+          <span class="ico">🔄</span>
+          <b>Bacino retroverso</b>
+          <p>Postura fissa che appiattisce la zona lombare.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="tabs">
+  <div class="wrap">
+    <a href="#mobilita">🤸 Mobilità</a>
+    <a href="#rinforzo">💪 Rinforzo</a>
+    <a href="#rieducazione">🧠 Rieducazione</a>
+    <a href="#checklist">✅ Checklist</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ===================== MOBILITÀ ===================== -->
+  <section class="group" id="mobilita">
+    <div class="group-head"><div class="dot"></div><h2>Mobilità</h2></div>
+    <p class="group-desc">Allunga ciò che è rigido: ischiocrurali e flessori dell'anca. Sblocca il movimento del bacino verso l'anteroversione.</p>
+
+    <!-- Stretching ischiocrurali -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Stretching ischiocrurali</h3>
+          <div class="summary-meta">
+            <span class="pill">60–90s per lato</span>
+            <span class="pill alt">Mobilità</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="10" y="120" width="70" height="8" rx="4" class="muted" stroke="none" fill="currentColor"/>
+            <circle cx="150" cy="30" r="12"/>
+            <path d="M150 42 L120 78"/>
+            <path d="M120 78 L60 118"/>
+            <path d="M120 78 L100 40"/>
+            <path d="M60 118 L45 122"/>
+            <path d="M120 78 L150 108 L150 128"/>
+            <path d="M150 42 L175 60"/>
+            <path d="M175 60 L150 100" class="accent2"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Bicipite femorale, semitendinoso, semimembranoso (catena posteriore della coscia).</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Appoggia il tallone di una gamba su un rialzo basso (sedia, gradino), gamba tesa ma non bloccata.</li>
+          <li>Gamba d'appoggio leggermente flessa, piedi puntati in avanti.</li>
+          <li>Mantieni la schiena diritta e spingi il bacino indietro, hinge sull'anca (non curvare la schiena).</li>
+          <li>Scendi finché senti una tensione moderata dietro la coscia, non dolore.</li>
+          <li>Respira lentamente e mantieni la posizione per il tempo indicato, poi cambia lato.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Curvare la schiena</b> per arrivare più in basso: annulla il beneficio e carica la lombare.</li>
+          <li><b>Ginocchio bloccato in iperestensione</b>: mantienilo morbido.</li>
+          <li><b>Rimbalzare</b> nello stretch invece di uno stiramento statico e controllato.</li>
+        </ul>
+
+        <div class="timer" data-durations="60,90" data-default="60" data-sides="true" data-side-names="Sinistro,Destro"></div>
+      </div>
+    </details>
+
+    <!-- Couch stretch -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Couch stretch (flessori dell'anca)</h3>
+          <div class="summary-meta">
+            <span class="pill">60–90s per lato</span>
+            <span class="pill alt">Mobilità</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M170 130 L170 30" class="muted"/>
+            <circle cx="110" cy="34" r="12"/>
+            <path d="M110 46 L112 90"/>
+            <path d="M112 90 L80 130"/>
+            <path d="M80 130 L60 132"/>
+            <path d="M112 90 L150 110 L168 100" class="accent2"/>
+            <path d="M110 46 L85 60"/>
+            <path d="M85 60 L75 40"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Ileopsoas, retto femorale, quadricipite (flessori dell'anca).</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Ginocchio posteriore appoggiato a terra vicino a un muro o divano, con il collo del piede in alto contro la superficie.</li>
+          <li>Piede anteriore avanti, ginocchio a 90°.</li>
+          <li>Porta il busto in verticale, contrai il gluteo del lato posteriore.</li>
+          <li>Spingi leggermente il bacino in avanti mantenendo l'addome attivo (evita di inarcare eccessivamente).</li>
+          <li>Mantieni la posizione respirando, poi cambia lato.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Iperestendere solo la lombare</b> invece di spingere l'anca in avanti: crea compenso, non stretch reale.</li>
+          <li><b>Bacino ruotato lateralmente</b>: tienilo allineato in avanti.</li>
+          <li><b>Salire troppo in fretta</b> con angoli aggressivi: aumenta gradualmente.</li>
+        </ul>
+
+        <div class="timer" data-durations="60,90" data-default="60" data-sides="true" data-side-names="Sinistro,Destro"></div>
+      </div>
+    </details>
+
+    <!-- Cat-cow -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Cat-Cow (enfasi estensione)</h3>
+          <div class="summary-meta">
+            <span class="pill">60s di flusso</span>
+            <span class="pill alt">Mobilità</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M40 120 L40 135 M180 120 L180 135 M55 70 L45 135 M165 70 L175 135" class="muted"/>
+            <circle cx="185" cy="55" r="12"/>
+            <path d="M175 62 Q110 40 55 68" class="accent2"/>
+            <path d="M55 68 L40 120"/>
+            <path d="M175 62 L180 120"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Erettori spinali, multifido, addome (mobilità segmentale della colonna).</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Posizione a quattro zampe, mani sotto le spalle, ginocchia sotto le anche.</li>
+          <li><strong>Cow (estensione):</strong> lascia scendere la pancia, apri il petto, sguardo leggermente in alto — enfatizza e trattieni 3-5 secondi.</li>
+          <li><strong>Cat (flessione):</strong> spingi la schiena verso l'alto, mento verso il petto — passaggio più rapido.</li>
+          <li>Alterna in modo fluido per tutta la durata, dedicando più tempo alla fase di estensione.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Muovere solo le spalle</b> senza coinvolgere davvero la lombare.</li>
+          <li><b>Andare di fretta</b>: il movimento deve essere lento e consapevole.</li>
+          <li><b>Forzare dolore acuto</b> in estensione: il movimento deve restare confortevole.</li>
+        </ul>
+
+        <div class="timer" data-durations="60,90" data-default="60" data-sides="false"></div>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===================== RINFORZO ===================== -->
+  <section class="group" id="rinforzo">
+    <div class="group-head"><div class="dot"></div><h2>Rinforzo</h2></div>
+    <p class="group-desc">Costruisci la forza della catena posteriore lombare per sostenere e mantenere la curva fisiologica.</p>
+
+    <!-- Hyperextensions -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Hyperextensions</h3>
+          <div class="summary-meta">
+            <span class="pill">3 x 12</span>
+            <span class="pill alt">Rinforzo</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M50 100 L170 100" class="muted"/>
+            <path d="M90 100 L90 140 M130 100 L130 140" class="muted"/>
+            <circle cx="60" cy="55" r="12"/>
+            <path d="M68 64 Q100 90 110 100" class="accent2"/>
+            <path d="M110 100 L112 135"/>
+            <path d="M112 135 L95 140 M112 135 L128 140"/>
+            <path d="M68 64 L45 75"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Erettori spinali, grande gluteo, ischiocrurali.</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Posizionati sul banco per hyperextensions con i fianchi appoggiati al bordo.</li>
+          <li>Parti con il busto piegato in avanti, schiena neutra (non arrotondata).</li>
+          <li>Risali estendendo l'anca fino ad allineare busto e gambe, senza iperestendere oltre la linea neutra.</li>
+          <li>Scendi in modo controllato e ripeti.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Iperestendere in cima</b> oltre la linea neutra: stressa inutilmente la lombare.</li>
+          <li><b>Arrotondare la schiena in basso</b>: mantieni sempre la colonna neutra.</li>
+          <li><b>Usare lo slancio</b> invece del controllo muscolare.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Bird dog -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Bird Dog</h3>
+          <div class="summary-meta">
+            <span class="pill">3 x 10 per lato</span>
+            <span class="pill alt">Rinforzo</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M60 120 L60 135 M140 120 L140 135" class="muted"/>
+            <circle cx="150" cy="70" r="11"/>
+            <path d="M141 78 Q95 100 60 120"/>
+            <path d="M95 100 L40 90" class="accent2"/>
+            <path d="M60 120 L15 130" class="accent2"/>
+            <path d="M141 78 L165 95 L165 120"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Erettori spinali, multifido, grande gluteo, core in stabilizzazione anti-rotazione.</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Posizione a quattro zampe, colonna neutra, sguardo verso il pavimento.</li>
+          <li>Estendi contemporaneamente braccio destro in avanti e gamba sinistra indietro.</li>
+          <li>Mantieni bacino e spalle paralleli al pavimento, senza ruotare.</li>
+          <li>Trattieni 2-3 secondi, torna in posizione e cambia lato.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Ruotare il bacino</b> alzando il fianco: mantienilo fermo e parallelo al suolo.</li>
+          <li><b>Inarcare la lombare</b> per alzare di più la gamba: l'altezza conta meno del controllo.</li>
+          <li><b>Movimento troppo veloce</b>: rallenta per mantenere stabilità.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Superman -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Superman</h3>
+          <div class="summary-meta">
+            <span class="pill">3 x 12</span>
+            <span class="pill alt">Rinforzo</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 120 L200 120" class="muted"/>
+            <circle cx="55" cy="105" r="11"/>
+            <path d="M64 108 Q110 100 150 108" class="accent2"/>
+            <path d="M150 108 L195 100" class="accent2"/>
+            <path d="M64 108 L30 95" class="accent2"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Erettori spinali, grande gluteo, spalle posteriori (in sinergia).</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>Sdraiati prono, braccia distese in avanti, gambe distese.</li>
+          <li>Solleva contemporaneamente braccia, petto e gambe di pochi centimetri da terra.</li>
+          <li>Mantieni il collo neutro (sguardo verso il pavimento, non in alto).</li>
+          <li>Trattieni 1-2 secondi in cima e scendi controllando il movimento.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Sollevare troppo in alto</b> creando iperestensione eccessiva della lombare.</li>
+          <li><b>Guardare in avanti/alto</b>: estende inutilmente il collo, tieni lo sguardo giù.</li>
+          <li><b>Slancio balistico</b>: il movimento deve essere lento e controllato.</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- Good morning -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Good Morning (leggero)</h3>
+          <div class="summary-meta">
+            <span class="pill">3 x 12</span>
+            <span class="pill alt">Rinforzo</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M75 40 L145 40" class="accent2"/>
+            <circle cx="110" cy="28" r="10"/>
+            <path d="M110 50 L130 95"/>
+            <path d="M130 95 L150 140"/>
+            <path d="M130 95 L100 140"/>
+            <path d="M150 140 L165 142 M100 140 L85 142"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Ischiocrurali, grande gluteo, erettori spinali.</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>In piedi, bilanciere leggero o bastone appoggiato sulle spalle (o mani dietro la nuca).</li>
+          <li>Ginocchia leggermente flesse, piedi larghezza anche.</li>
+          <li>Fai un hinge dell'anca spingendo i glutei indietro, busto che scende in avanti mantenendo la schiena piatta.</li>
+          <li>Scendi finché senti tensione negli ischiocrurali, senza perdere la posizione neutra della colonna.</li>
+          <li>Risali spingendo con i glutei fino alla posizione eretta.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Arrotondare la schiena</b> in discesa: interrompi il movimento se senti la lombare cedere.</li>
+          <li><b>Piegare troppo le ginocchia</b>: diventa uno squat, non un hinge.</li>
+          <li><b>Usare carichi eccessivi</b>: questo esercizio va eseguito leggero e controllato.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===================== RIEDUCAZIONE ===================== -->
+  <section class="group" id="rieducazione">
+    <div class="group-head"><div class="dot"></div><h2>Rieducazione posturale</h2></div>
+    <p class="group-desc">Impara a percepire e controllare volontariamente il movimento del bacino, e applica questo controllo nei gesti quotidiani.</p>
+
+    <!-- Anterior pelvic tilt drill -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Anterior Pelvic Tilt Drill</h3>
+          <div class="summary-meta">
+            <span class="pill">3 x 15 (hold 3s)</span>
+            <span class="pill alt">Rieducazione</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M110 20 L110 140" class="muted"/>
+            <circle cx="110" cy="30" r="11"/>
+            <path d="M110 41 L110 90"/>
+            <path d="M110 90 L95 140 M110 90 L125 140" class="muted"/>
+            <path d="M95 88 Q110 78 125 88" class="accent2"/>
+            <path d="M85 60 Q60 55 55 45" class="curve"/>
+          </svg>
+        </div>
+
+        <h4>Muscoli coinvolti</h4>
+        <p class="muscles">Flessori dell'anca, erettori lombari (attivazione), addome basso (controllo).</p>
+
+        <h4>Istruzioni</h4>
+        <ol class="steps">
+          <li>In piedi con la schiena contro un muro, piedi a circa 15 cm di distanza.</li>
+          <li>Nota lo spazio tra la lombare e il muro: parti da bacino "neutro/retroverso".</li>
+          <li>Inclina volontariamente il bacino in avanti (anteroversione), aumentando lo spazio lombare-muro.</li>
+          <li>Trattieni 3 secondi percependo l'attivazione, poi torna neutro in modo controllato.</li>
+          <li>Ripeti alternando le due direzioni per allenare la percezione del movimento.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Muovere le ginocchia o il busto</b> invece del solo bacino.</li>
+          <li><b>Trattenere il respiro</b>: continua a respirare durante l'esecuzione.</li>
+          <li><b>Movimento troppo ampio o brusco</b>: deve restare piccolo e controllato.</li>
+        </ul>
+
+        <div class="timer" data-durations="45,60" data-default="45" data-sides="false"></div>
+      </div>
+    </details>
+
+    <!-- Squat/stacchi tips -->
+    <details class="exercise">
+      <summary>
+        <div class="summary-txt">
+          <h3>Squat &amp; Stacchi: mantenere la curva</h3>
+          <div class="summary-meta">
+            <span class="pill">Linee guida</span>
+            <span class="pill alt">Rieducazione</span>
+          </div>
+        </div>
+        <div class="chevron">▾</div>
+      </summary>
+      <div class="exercise-body">
+        <div class="illustration">
+          <svg viewBox="0 0 220 160" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="90" cy="30" r="11"/>
+            <path d="M90 41 L88 75"/>
+            <path d="M85 55 Q60 50 55 40" class="curve"/>
+            <path d="M88 75 L55 100 L55 140"/>
+            <path d="M88 75 L120 100 L120 140"/>
+            <path d="M90 41 L60 55 M90 41 L120 30" class="accent2"/>
+          </svg>
+        </div>
+
+        <h4>Perché conta</h4>
+        <p class="muscles">Durante squat e stacchi, la perdita della curva lombare ("back rounding") sotto carico è il momento in cui il rischio di sovraccarico aumenta. Mantenere una leggera lordosi protegge la colonna e trasferisce meglio la forza.</p>
+
+        <h4>Consigli pratici</h4>
+        <ol class="steps">
+          <li>Prima di scendere, crea attivamente una leggera anteroversione del bacino ("petto in fuori, schiena piatta").</li>
+          <li>Scendi solo fino al punto in cui riesci a mantenere questa posizione: la profondità si conquista con la mobilità, non forzandola.</li>
+          <li>Nello stacco, imposta la posizione di partenza con schiena piatta prima di staccare il peso da terra.</li>
+          <li>Se senti la lombare "arrotondarsi" o "flettersi" a fine ripetizione, riduci il carico o il range di movimento.</li>
+          <li>Filmati di lato o usa uno specchio periodicamente per controllare la tecnica.</li>
+        </ol>
+
+        <h4>Errori comuni</h4>
+        <ul class="mistakes">
+          <li><b>Butt wink</b> (bacino che si arrotola sotto a fine squat): spesso segnale di mobilità di anca/caviglia insufficiente.</li>
+          <li><b>Schiena curva nello stacco</b>: aumenta drasticamente lo stress lombare, specialmente con carichi alti.</li>
+          <li><b>Ignorare la fatica tecnica</b>: quando la tecnica peggiora, è il momento di fermarsi, non di aggiungere ripetizioni.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ===================== CHECKLIST ===================== -->
+  <section class="group" id="checklist">
+    <div class="group-head"><div class="dot"></div><h2>Checklist</h2></div>
+    <p class="group-desc">Lo stato si salva solo in memoria per questa sessione: ricaricando la pagina la checklist si azzera.</p>
+
+    <div class="checklist-card">
+      <h3>Checklist giornaliera</h3>
+      <p class="progress-line" id="dailyProgressText">0/7 completati oggi</p>
+      <div class="progress-bar"><div class="progress-bar-fill" id="dailyProgressFill"></div></div>
+      <div id="dailyChecklist"></div>
+      <button class="checklist-reset" data-reset="daily">Reset giornaliero</button>
+    </div>
+
+    <div class="checklist-card">
+      <h3>Checklist settimanale</h3>
+      <p class="progress-line" id="weeklyProgressText">0/5 completati questa settimana</p>
+      <div class="progress-bar"><div class="progress-bar-fill" id="weeklyProgressFill"></div></div>
+      <div id="weeklyChecklist"></div>
+      <button class="checklist-reset" data-reset="weekly">Reset settimanale</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Guida a scopo informativo, non sostituisce la valutazione di un professionista sanitario.<br>
+  In caso di dolore persistente, consulta un fisioterapista.
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- THEME ---------- */
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('themeToggle');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    themeBtn.textContent = t === 'light' ? '☀️' : '🌙';
+  }
+  applyTheme('dark');
+  themeBtn.addEventListener('click', function(){
+    var current = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    applyTheme(current);
+  });
+
+  /* ---------- AUDIO / VIBRATION ---------- */
+  var audioCtx = null;
+  function beep(){
+    try{
+      if(!audioCtx){
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if(!Ctx) return;
+        audioCtx = new Ctx();
+      }
+      if(audioCtx.state === 'suspended'){ audioCtx.resume(); }
+      var now = audioCtx.currentTime;
+      [0, 0.22].forEach(function(offset){
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.0001, now + offset);
+        gain.gain.exponentialRampToValueAtTime(0.28, now + offset + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + offset + 0.18);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + offset);
+        osc.stop(now + offset + 0.2);
+      });
+    }catch(e){ /* audio not available */ }
+  }
+  function buzz(){
+    if('vibrate' in navigator){
+      try{ navigator.vibrate([250,100,250]); }catch(e){}
+    }
+  }
+
+  /* ---------- TIMER ---------- */
+  var TIMER_TPL = function(){
+    var svgNS = 'http://www.w3.org/2000/svg';
+    return svgNS;
+  };
+
+  function initTimer(container){
+    var durations = (container.dataset.durations || '60').split(',').map(function(n){ return parseInt(n,10); });
+    var hasSides = container.dataset.sides === 'true';
+    var sideNames = (container.dataset.sideNames || 'Sinistro,Destro').split(',');
+    var duration = parseInt(container.dataset.default || durations[0], 10);
+    var remaining = duration;
+    var sideIndex = 0;
+    var intervalId = null;
+    var endTime = null;
+    var running = false;
+
+    var r = 52, c = 2 * Math.PI * r;
+
+    container.innerHTML =
+      (hasSides ? '<div class="side-label">Lato: ' + sideNames[0] + '</div>' : '<div class="side-label"></div>') +
+      '<div class="ring-wrap">' +
+        '<svg class="ring" viewBox="0 0 120 120">' +
+          '<defs><linearGradient id="tgrad" x1="0%" y1="0%" x2="100%" y2="100%">' +
+            '<stop offset="0%" stop-color="#34d399"/><stop offset="100%" stop-color="#2dd4bf"/>' +
+          '</linearGradient></defs>' +
+          '<circle class="ring-bg" cx="60" cy="60" r="' + r + '"></circle>' +
+          '<circle class="ring-fg" cx="60" cy="60" r="' + r + '" stroke-dasharray="' + c + '" stroke-dashoffset="0"></circle>' +
+        '</svg>' +
+        '<div class="time-txt">' + fmt(remaining) + '</div>' +
+      '</div>' +
+      '<div class="durations">' +
+        durations.map(function(d){
+          return '<button type="button" data-d="' + d + '" class="' + (d === duration ? 'active' : '') + '">' + d + 's</button>';
+        }).join('') +
+      '</div>' +
+      '<div class="controls">' +
+        '<button type="button" class="main-btn" data-action="start">Avvia</button>' +
+        '<button type="button" class="reset-btn" data-action="reset">Reset</button>' +
+      '</div>' +
+      '<div class="done-flash"></div>';
+
+    var timeTxt = container.querySelector('.time-txt');
+    var ringFg = container.querySelector('.ring-fg');
+    var mainBtn = container.querySelector('[data-action="start"]');
+    var resetBtn = container.querySelector('[data-action="reset"]');
+    var doneFlash = container.querySelector('.done-flash');
+    var sideLabel = container.querySelector('.side-label');
+    var durationBtns = container.querySelectorAll('.durations button');
+
+    function fmt(s){
+      var m = Math.floor(s / 60);
+      var sec = s % 60;
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    function render(){
+      timeTxt.textContent = fmt(remaining);
+      var progress = 1 - (remaining / duration);
+      ringFg.setAttribute('stroke-dashoffset', String(c * (1 - progress)));
+    }
+
+    function tick(){
+      var now = Date.now();
+      remaining = Math.max(0, Math.round((endTime - now) / 1000));
+      render();
+      if(remaining <= 0){
+        stop();
+        doneFlash.textContent = '✓ Fatto!';
+        beep();
+        buzz();
+        if(hasSides && sideIndex === 0){
+          sideIndex = 1;
+          sideLabel.textContent = 'Lato: ' + sideNames[1];
+        }
+        setTimeout(function(){ doneFlash.textContent = ''; }, 2500);
+      }
+    }
+
+    function start(){
+      if(running) return;
+      running = true;
+      mainBtn.textContent = 'Pausa';
+      endTime = Date.now() + remaining * 1000;
+      intervalId = setInterval(tick, 200);
+    }
+
+    function pause(){
+      running = false;
+      mainBtn.textContent = 'Avvia';
+      clearInterval(intervalId);
+    }
+
+    function stop(){
+      running = false;
+      mainBtn.textContent = 'Avvia';
+      clearInterval(intervalId);
+    }
+
+    function reset(){
+      stop();
+      remaining = duration;
+      sideIndex = 0;
+      if(hasSides) sideLabel.textContent = 'Lato: ' + sideNames[0];
+      doneFlash.textContent = '';
+      render();
+    }
+
+    mainBtn.addEventListener('click', function(){
+      if(running){ pause(); } else { start(); }
+    });
+    resetBtn.addEventListener('click', reset);
+
+    durationBtns.forEach(function(btn){
+      btn.addEventListener('click', function(){
+        if(running) return;
+        durationBtns.forEach(function(b){ b.classList.remove('active'); });
+        btn.classList.add('active');
+        duration = parseInt(btn.dataset.d, 10);
+        remaining = duration;
+        render();
+      });
+    });
+
+    render();
+  }
+
+  document.querySelectorAll('.timer').forEach(initTimer);
+
+  /* ---------- CHECKLIST ---------- */
+  var dailyItems = [
+    { id:'d1', title:'Stretching ischiocrurali', sub:'60-90s per lato' },
+    { id:'d2', title:'Couch stretch flessori anca', sub:'60-90s per lato' },
+    { id:'d3', title:'Cat-Cow con estensione', sub:'~60s di flusso' },
+    { id:'d4', title:'Anterior pelvic tilt drill', sub:'3 x 15, hold 3s' },
+    { id:'d5', title:'Bird dog', sub:'3 x 10 per lato' },
+    { id:'d6', title:'Superman o Hyperextensions', sub:'3 x 12' },
+    { id:'d7', title:'Postura consapevole durante il giorno', sub:'controlla il bacino da seduto/in piedi' }
+  ];
+
+  var weeklyItems = [
+    { id:'w1', title:'Sessioni di rinforzo lombare', sub:'obiettivo: 3 volte questa settimana' },
+    { id:'w2', title:'Sessioni di mobilità', sub:'obiettivo: 5 volte questa settimana' },
+    { id:'w3', title:'Rieducazione posturale', sub:'obiettivo: 5 volte questa settimana' },
+    { id:'w4', title:'Check tecnica squat/stacco', sub:'con specchio o video' },
+    { id:'w5', title:'Movimento leggero / camminata', sub:'obiettivo: 2 volte questa settimana' }
+  ];
+
+  var state = { daily: {}, weekly: {} };
+
+  function renderChecklist(items, containerId, stateKey, progressTextId, progressFillId, defaultText){
+    var container = document.getElementById(containerId);
+    container.innerHTML = items.map(function(item){
+      return (
+        '<label class="check-item" data-id="' + item.id + '">' +
+          '<input type="checkbox" data-id="' + item.id + '">' +
+          '<span>' +
+            '<span class="lbl-title">' + item.title + '</span>' +
+            '<span class="lbl-sub">' + item.sub + '</span>' +
+          '</span>' +
+        '</label>'
+      );
+    }).join('');
+
+    container.querySelectorAll('input[type="checkbox"]').forEach(function(cb){
+      cb.addEventListener('change', function(){
+        state[stateKey][cb.dataset.id] = cb.checked;
+        cb.closest('.check-item').classList.toggle('checked', cb.checked);
+        updateProgress(items, stateKey, progressTextId, progressFillId, defaultText);
+      });
+    });
+
+    updateProgress(items, stateKey, progressTextId, progressFillId, defaultText);
+  }
+
+  function updateProgress(items, stateKey, progressTextId, progressFillId, defaultText){
+    var total = items.length;
+    var done = items.filter(function(item){ return !!state[stateKey][item.id]; }).length;
+    document.getElementById(progressTextId).textContent = done + '/' + total + ' ' + defaultText;
+    document.getElementById(progressFillId).style.width = (total ? (done / total * 100) : 0) + '%';
+  }
+
+  renderChecklist(dailyItems, 'dailyChecklist', 'daily', 'dailyProgressText', 'dailyProgressFill', 'completati oggi');
+  renderChecklist(weeklyItems, 'weeklyChecklist', 'weekly', 'weeklyProgressText', 'weeklyProgressFill', 'completati questa settimana');
+
+  document.querySelectorAll('.checklist-reset').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var key = btn.dataset.reset;
+      state[key] = {};
+      if(key === 'daily'){
+        renderChecklist(dailyItems, 'dailyChecklist', 'daily', 'dailyProgressText', 'dailyProgressFill', 'completati oggi');
+      } else {
+        renderChecklist(weeklyItems, 'weeklyChecklist', 'weekly', 'weeklyProgressText', 'weeklyProgressFill', 'completati questa settimana');
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
