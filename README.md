@@ -1,102 +1,63 @@
 # Fixed Income Relative Value Screener
 
-Screens a real, live universe of ~20 exchange-traded fixed-income funds
-(Treasuries, investment-grade and high-yield corporates, emerging market
-debt, bank loans, and more) to find where the market currently offers the
-best compensation (yield) per unit of risk (volatility) — and whether each
-segment is currently rich or cheap relative to **its own trailing history**.
+Systematic relative-value analysis across a live universe of approximately 20 exchange-traded fixed-income funds — U.S. Treasuries, investment-grade and high-yield corporates, emerging market debt, and bank loans. The tool ranks the universe by risk-adjusted yield and identifies which segments are trading rich or cheap relative to their own historical distribution.
 
-No hand-typed assumptions anywhere in the core analysis: every run pulls
-fresh prices and dividend distributions and recomputes everything from
-scratch.
+The analysis is fully data-driven: no assumptions are hard-coded. Every execution retrieves current prices and dividend distributions and recomputes all metrics from source.
 
-Built as an independent project applying fixed-income and relative-value
-concepts to real, live market data.
+## Methodology
 
-## What it does
+1. **Data acquisition** — live price and dividend history for approximately 20 bond ETFs via `yfinance`, spanning short- and long-duration Treasuries, TIPS, investment-grade and high-yield corporates, bank loans, USD- and local-currency emerging market debt, international government bonds, and broad aggregates.
 
-1. **Live data** — downloads real price and dividend history for ~20 bond
-   ETFs via `yfinance`, spanning US Treasuries (short to long), TIPS,
-   investment-grade and high-yield corporates, bank loans, EM debt
-   (USD and local currency), international government bonds, and broad
-   aggregates.
-2. **Derived metrics, computed fresh every run**:
-   - **Trailing-12-month yield** — real dividends paid in the last 365
-     days, divided by the current price
-   - **Realized volatility** — annualized standard deviation of daily
-     returns
-   - **Yield percentile vs. own history** — where today's yield sits
-     within that same fund's own trailing yield history (no external
-     benchmark needed — each fund is compared only to itself)
-3. **Ranking** — sorts the universe by yield-per-unit-of-volatility, a
-   simple risk-adjusted compensation measure comparable across very
-   different segments.
-4. **Bonus utility** — the standalone DCF bond calculator
-   (`src/bond_pricer.py`, carried over from an earlier version of this
-   project) values a hypothetical bond using a live long-term Treasury
-   yield as the discount-rate proxy, as a worked example.
+2. **Derived metrics, recomputed on every run**
+   - **Trailing twelve-month yield** — realized distributions over the preceding 365 days, divided by current price
+   - **Realized volatility** — annualized standard deviation of daily returns
+   - **Yield percentile versus own history** — the current yield's position within that fund's trailing distribution, benchmarked against itself rather than an external index
+
+3. **Ranking** — the universe is ordered by yield per unit of volatility, a risk-adjusted compensation measure applied consistently across heterogeneous segments.
+
+4. **Supplementary module** — a standalone discounted-cash-flow bond calculator (`src/bond_pricer.py`) values a hypothetical bond using a live long-term Treasury yield as the discount-rate proxy.
 
 ## Project structure
 
 ```
 fixed-income-rv/
-├── main.py                  # orchestrates the full pipeline
+├── main.py                  # pipeline orchestration
 ├── requirements.txt
 ├── src/
-│   ├── etf_universe.py       # the ~20 real ETF tickers and segments
-│   ├── data_loader.py        # downloads live data, computes yield/vol
-│   ├── analysis.py           # builds the ranked summary table
-│   ├── viz.py                # charts
-│   └── bond_pricer.py        # standalone DCF/YTM/duration calculator
-└── outputs/                  # generated charts (created on run)
+│   ├── etf_universe.py      # ETF universe definition and segment classification
+│   ├── data_loader.py       # data acquisition, yield and volatility computation
+│   ├── analysis.py          # ranked summary construction
+│   ├── viz.py                # chart generation
+│   └── bond_pricer.py       # standalone DCF / YTM / duration calculator
+└── outputs/                  # generated charts (created at runtime)
 ```
 
-## Running it
+## Execution
 
 ```bash
 pip install -r requirements.txt
 python main.py
 ```
 
-Requires an internet connection to fetch live ETF data. If a handful of
-tickers fail (temporary rate limits, etc.) they are skipped individually
-and the rest of the universe still runs. If the **entire** universe is
-unreachable (e.g. no internet at all), the pipeline falls back to a small,
-clearly-labeled synthetic sample so the code can still be reviewed
-end-to-end.
+Requires an active internet connection. Individual ticker failures (e.g., transient rate limiting) are handled gracefully and excluded without interrupting the run. If the data source is entirely unreachable, the pipeline falls back to a clearly labeled synthetic sample so the codebase remains reviewable end-to-end.
 
-## Example output
+## Output
 
-**Yield vs. volatility across the universe:**
+**Yield versus volatility across the universe**
 
 ![Yield vs Vol](outputs/yield_vs_vol.png)
 
-**Current yield vs. own trailing history:**
+**Current yield versus own trailing history**
 
 ![Yield Percentile](outputs/yield_percentile.png)
 
 ## Methodology notes and limitations
 
-- **ETF yield as a proxy, not a precise bond-level YTM**: the
-  trailing-12-month distribution yield is a common practitioner shortcut,
-  but it lags reality somewhat (it reflects dividends already paid, not
-  the fund's current portfolio yield-to-maturity) and can be distorted by
-  special distributions or changes in the underlying portfolio.
-  Fund-reported "SEC yield" or "YTM", where available from the provider,
-  would be more precise but is not reliably available via free APIs.
-- **Volatility as a risk proxy for duration**: realized price volatility
-  captures interest-rate *and* credit risk together, not duration alone —
-  useful as a practical risk measure, but not a substitute for a fund's
-  actual effective duration (published by the provider, not by this tool).
-- **US-dollar-centric universe**: most of these ETFs are USD-denominated
-  and US-listed; a euro-based private bank would also consider
-  Bund/OAT/BTP-denominated instruments — this is a natural extension
-  (e.g. adding London-listed EUR bond ETFs via yfinance).
-- **Historical window (3 years)** for the percentile calculation is a
-  modeling choice — a longer or shorter window would shift what counts as
-  "rich" or "cheap."
-- **Not investment advice** — a demonstration of the relative-value
-  method using real data, not a portfolio recommendation.
+- **ETF distribution yield as a proxy for yield-to-maturity.** Trailing twelve-month distribution yield is a standard practitioner approximation, but it reflects dividends already paid rather than the fund's current portfolio yield-to-maturity, and can be distorted by special distributions or portfolio turnover. Provider-reported SEC yield or YTM would be more precise where reliably available.
+- **Realized volatility as a proxy for duration risk.** Price volatility captures interest-rate and credit risk jointly, not duration in isolation. It is a practical risk measure, not a substitute for provider-published effective duration.
+- **USD-centric universe.** The current universe is predominantly USD-denominated and US-listed. Extension to EUR-denominated instruments (Bund, OAT, BTP) is a natural next step for a euro-based mandate.
+- **Historical window.** The three-year lookback used for percentile ranking is a modeling choice; a different window would shift the classification of "rich" versus "cheap."
+- **Not investment advice.** This is a demonstration of relative-value methodology applied to live data, not a portfolio recommendation.
 
 ## Tech stack
 
@@ -104,4 +65,6 @@ Python · pandas · numpy · yfinance · matplotlib
 
 ## Author
 
-Marco Bettuzzi — Economics and Statistics student, University of Turin
+Marco Bettuzzi
+Economics and Statistics, University of Turin
+[github.com/bettuzzim](https://github.com/bettuzzim)
