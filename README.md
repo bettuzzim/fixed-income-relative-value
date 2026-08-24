@@ -51,6 +51,14 @@ Requires an active internet connection. Individual ticker failures (e.g., transi
 
 ![Yield Percentile](outputs/yield_percentile.png)
 
+## Live dashboard
+
+An interactive Streamlit dashboard (`app.py`) sits on top of the same pipeline — filterable ranking table, an interactive yield-vs-volatility scatter, the percentile chart, and a per-ticker trailing-yield drill-down.
+
+```bash
+streamlit run app.py
+```
+
 ## Methodology notes and limitations
 
 - **ETF distribution yield as a proxy for yield-to-maturity.** Trailing twelve-month distribution yield is a standard practitioner approximation, but it reflects dividends already paid rather than the fund's current portfolio yield-to-maturity, and can be distorted by special distributions or portfolio turnover. Provider-reported SEC yield or YTM would be more precise where reliably available.
