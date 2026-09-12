@@ -70,6 +70,8 @@ def load_etf_data(period="3y", pause=0.3):
             results[ticker] = {
                 "segment": meta["segment"],
                 "name": meta["name"],
+                "family": meta["family"],
+                "approx_duration_yrs": meta["approx_duration_yrs"],
                 "current_yield": current_yield,
                 "current_vol": vol,
                 "yield_percentile": percentile,
@@ -99,11 +101,11 @@ def _synthetic_fallback(seed=3):
     live universe is unreachable (e.g. no internet at all)."""
     rng = np.random.default_rng(seed)
     segments = {
-        "SIM_GOVT_SHORT": "US Treasury (1-3y) [SIMULATED]",
-        "SIM_GOVT_LONG": "US Treasury (20y+) [SIMULATED]",
-        "SIM_IG_CORP": "IG Corporate (broad) [SIMULATED]",
-        "SIM_HY_CORP": "HY Corporate (broad) [SIMULATED]",
-        "SIM_EM_DEBT": "EM Debt (USD) [SIMULATED]",
+        "SIM_GOVT_SHORT": ("US Treasury (1-3y) [SIMULATED]", "US Treasury", 1.9),
+        "SIM_GOVT_LONG": ("US Treasury (20y+) [SIMULATED]", "US Treasury", 16.5),
+        "SIM_IG_CORP": ("IG Corporate (broad) [SIMULATED]", "IG Corporate", 8.4),
+        "SIM_HY_CORP": ("HY Corporate (broad) [SIMULATED]", "HY Corporate", 3.2),
+        "SIM_EM_DEBT": ("EM Debt (USD) [SIMULATED]", "EM Debt", 7.0),
     }
     base_yields = {"SIM_GOVT_SHORT": 0.045, "SIM_GOVT_LONG": 0.047,
                    "SIM_IG_CORP": 0.052, "SIM_HY_CORP": 0.078, "SIM_EM_DEBT": 0.068}
@@ -111,7 +113,7 @@ def _synthetic_fallback(seed=3):
                 "SIM_IG_CORP": 0.07, "SIM_HY_CORP": 0.09, "SIM_EM_DEBT": 0.11}
 
     results = {}
-    for ticker, label in segments.items():
+    for ticker, (label, family, duration) in segments.items():
         dates = pd.date_range(end=pd.Timestamp.today(), periods=756, freq="B")
         yield_series = pd.Series(
             base_yields[ticker] + rng.normal(0, 0.003, size=len(dates)).cumsum() * 0.01,
@@ -123,6 +125,8 @@ def _synthetic_fallback(seed=3):
         results[ticker] = {
             "segment": label,
             "name": label,
+            "family": family,
+            "approx_duration_yrs": duration,
             "current_yield": current_yield,
             "current_vol": base_vols[ticker],
             "yield_percentile": percentile,
